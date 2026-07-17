@@ -1,0 +1,31 @@
+Background
+    Commannd in file command.txt needs to be executed in Azure Cloud Shell bash to run the scripts in the zip file 
+    COmmand needs to be run by Azure/Entra administrator (Admin B) with Global Administrator role and Owner of Azure root management group.
+    Command returns a value that needs to be provided to the Administrator of cyberark Identity Security Platform (admin A) who will put it in te field on the UI.
+
+    CCE means Connect Cloud Envirionemnts, capability that is also referred to as 'cloud onboarding' or 'onboarding' in comments and variables
+    Scripts create app registrations, roles etc that are needed for the 'connecting' or 'onboarding' process.
+
+Known variables:
+    Parameters of command are Azure DirectoryID, in this case 013b1119-5a71-40ea-8e77-d31c36d5ac5d
+    "https://przd-test3-cloudonboarding.cyberark.cloud" is a URL where API endpoints exist
+    I dont know what value -u -u 87574a2011764e34bb44aa1289153f28
+
+Need:
+    Customer ACME needs to connect Entra tenant with all Azure resources to a tenant of Cyberark Identity Security (ISP) platform.
+    Connecting Entra tenant is also referred to as 'onboarding' in many places of the documentation and in API references.
+
+    Connecting process comprises of creation of resources in Azure, setting up the cyberark Platform side and then connecting the two together.
+
+    ACME needs to run this process in two separated streams
+    One stream is run by Admin A
+    Secomd stream is run by ACME Admin B that are expecting to create everything on the Azure portal manually. 
+
+
+Task:
+    Unzip the file in this folder
+    Analyze the scripts in the context of the command 
+    Write a step by step instruction for Admin B that will correspond with what the command does. Admin will be interacting with Azure Portal and will not use the scripts.
+    Instruction needs to have a form of a md file
+    Create a github repo and commit the md file
+
