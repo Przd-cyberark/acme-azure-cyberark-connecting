@@ -2,6 +2,10 @@
 
 > **Terminology note:** Throughout this guide the term **connecting** is used in place of **onboarding**. The underlying scripts and Azure resource names still use the word *onboarding* as a technical identifier – those names must be entered exactly as shown and must not be changed.
 
+> **Placeholders:** Two values in this guide are specific to your CyberArk ISP tenant and will be provided to Admin B by Admin A before starting:
+> - `<subdomain>` – the subdomain of your CyberArk ISP tenant (e.g. the part before `-cloudonboarding.cyberark.cloud`)
+> - `<identity_id>` – the identity service ID of your CyberArk ISP tenant (e.g. the subdomain before `.id.cyberark.cloud` in the federated credential issuer URLs)
+
 > **Context:** This guide covers the manual Azure Portal steps that correspond to the CyberArk connecting automation scripts. Admin B must have the **Global Administrator** role in Entra ID and be **Owner** of the Azure root management group.
 >
 > The process connects the ACME Entra tenant and all Azure resources to the CyberArk Identity Security Platform (ISP). It registers two CyberArk services:
@@ -15,7 +19,7 @@
 | Item | Value |
 |---|---|
 | ACME Entra Directory ID | `013b1119-5a71-40ea-8e77-d31c36d5ac5d` |
-| CyberArk connecting URL | `https://przd-test3-cloudonboarding.cyberark.cloud` |
+| CyberArk connecting URL | `https://<subdomain>-cloudonboarding.cyberark.cloud` |
 | CyberArk Deployment ID | `fdf7d427-f364-46dc-80c6-11b3f12e3953` |
 | Root Management Group scope | `/providers/Microsoft.Management/managementGroups/013b1119-5a71-40ea-8e77-d31c36d5ac5d` |
 
@@ -29,7 +33,7 @@
 2. Fill in:
    - **Name:** `cyberark-cloud-onboarding-app-entra-tenant-87574a2011764e34bb44`
    - **Supported account types:** Accounts in this organizational directory only (Single tenant)
-   - **Redirect URI:** Platform = **Web**, URL = `https://przd-test3-cloudonboarding.cyberark.cloud`
+   - **Redirect URI:** Platform = **Web**, URL = `https://<subdomain>-cloudonboarding.cyberark.cloud`
 3. Click **Register**. Note the **Application (client) ID** that is displayed – this is `<CCE_APP_ID>`.
 
 ### Step 1.2 – Add API permission to the CCE app
@@ -51,7 +55,7 @@ A service principal is created automatically when you register an app in your ow
 1. In the App Registration, go to **Certificates & secrets → Federated credentials → Add credential**.
 2. Choose **Federated credential scenario:** Other issuer.
 3. Fill in:
-   - **Issuer:** `https://aci4148.id.cyberark.cloud/Oauth2_For_Azure_Workload_Identity_Federation/`
+   - **Issuer:** `https://<identity_id>.id.cyberark.cloud/Oauth2_For_Azure_Workload_Identity_Federation/`
    - **Subject identifier:** `3f2192e6-9f40-4ecf-ac62-ecfb8e5c3581`
    - **Audience:** `api://AzureADTokenExchange`
    - **Name:** `cloud-onboarding`
@@ -90,7 +94,7 @@ SCA creates **two** app registrations: one for Entra-level operations and one fo
 2. Fill in:
    - **Name:** `cyberark-sca-app-entra-e24ffa6e97ff-d31c36d5ac5d`
    - **Supported account types:** Accounts in this organizational directory only (Single tenant)
-   - **Redirect URI:** Platform = **Web**, URL = `https://przd-test3-cloudonboarding.cyberark.cloud`
+   - **Redirect URI:** Platform = **Web**, URL = `https://<subdomain>-cloudonboarding.cyberark.cloud`
 3. Click **Register**. Note the **Application (client) ID** – this is `<SCA_ENTRA_APP_ID>`.
 
 ### Step 2.3 – Add API permissions to the SCA Entra app
@@ -112,7 +116,7 @@ Verify or create the Enterprise Application entry (same as Step 1.3, but for `cy
 1. In the App Registration, go to **Certificates & secrets → Federated credentials → Add credential**.
 2. Choose **Federated credential scenario:** Other issuer.
 3. Fill in:
-   - **Issuer:** `https://aci4148.id.cyberark.cloud/SCA_Oauth2_For_Azure_Workload_Identity_Federation/`
+   - **Issuer:** `https://<identity_id>.id.cyberark.cloud/SCA_Oauth2_For_Azure_Workload_Identity_Federation/`
    - **Subject identifier:** `SCA_ISOLATED_SYSTEM_USER_FOR_AZURE_E24FFA6E97FF_D31C36D5AC5D_ENTRA`
    - **Audience:** `api://AzureADTokenExchange`
    - **Name:** `cyberark-sca-app-entra-user-e24ffa6e97ff-d31c36d5ac5d`
@@ -166,7 +170,7 @@ Verify or create the Enterprise Application entry (same as Step 1.3, but for `cy
 2. Fill in:
    - **Name:** `cyberark-sca-app-resource-e24ffa6e97ff-d31c36d5ac5d`
    - **Supported account types:** Accounts in this organizational directory only (Single tenant)
-   - **Redirect URI:** Platform = **Web**, URL = `https://przd-test3-cloudonboarding.cyberark.cloud`
+   - **Redirect URI:** Platform = **Web**, URL = `https://<subdomain>-cloudonboarding.cyberark.cloud`
 3. Click **Register**. Note the **Application (client) ID** – this is `<SCA_RESOURCE_APP_ID>`.
 
 ### Step 3.3 – Add API permissions to the SCA Resource app
@@ -189,7 +193,7 @@ Verify or create the Enterprise Application entry for `cyberark-sca-app-resource
 1. In the App Registration, go to **Certificates & secrets → Federated credentials → Add credential**.
 2. Choose **Federated credential scenario:** Other issuer.
 3. Fill in:
-   - **Issuer:** `https://aci4148.id.cyberark.cloud/SCA_Oauth2_For_Azure_Workload_Identity_Federation/`
+   - **Issuer:** `https://<identity_id>.id.cyberark.cloud/SCA_Oauth2_For_Azure_Workload_Identity_Federation/`
    - **Subject identifier:** `SCA_ISOLATED_SYSTEM_USER_FOR_AZURE_E24FFA6E97FF_D31C36D5AC5D_RESOURCE`
    - **Audience:** `api://AzureADTokenExchange`
    - **Name:** `cyberark-sca-app-resource-user-e24ffa6e97ff-d31c36d5ac5d`
