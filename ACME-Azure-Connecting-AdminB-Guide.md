@@ -1,8 +1,10 @@
-# ACME Azure Onboarding – Step-by-Step Guide for Admin B
+# ACME Azure Connecting – Step-by-Step Guide for Admin B
 
-> **Context:** This guide covers the manual Azure Portal steps that correspond to the CyberArk onboarding automation scripts. Admin B must have the **Global Administrator** role in Entra ID and be **Owner** of the Azure root management group.
+> **Terminology note:** Throughout this guide the term **connecting** is used in place of **onboarding**. The underlying scripts and Azure resource names still use the word *onboarding* as a technical identifier – those names must be entered exactly as shown and must not be changed.
+
+> **Context:** This guide covers the manual Azure Portal steps that correspond to the CyberArk connecting automation scripts. Admin B must have the **Global Administrator** role in Entra ID and be **Owner** of the Azure root management group.
 >
-> The process onboards the ACME Entra tenant and all Azure resources into the CyberArk Identity Security Platform (ISP). It registers two CyberArk services:
+> The process connects the ACME Entra tenant and all Azure resources to the CyberArk Identity Security Platform (ISP). It registers two CyberArk services:
 > - **Connect Cloud Environments (CCE)** – lets CyberArk discover and manage your Azure environment.
 > - **Secure Cloud Access (SCA)** – lets CyberArk manage privileged access to Azure resources and Entra.
 
@@ -13,7 +15,7 @@
 | Item | Value |
 |---|---|
 | ACME Entra Directory ID | `013b1119-5a71-40ea-8e77-d31c36d5ac5d` |
-| CyberArk onboarding URL | `https://przd-test3-cloudonboarding.cyberark.cloud` |
+| CyberArk connecting URL | `https://przd-test3-cloudonboarding.cyberark.cloud` |
 | CyberArk Deployment ID | `fdf7d427-f364-46dc-80c6-11b3f12e3953` |
 | Root Management Group scope | `/providers/Microsoft.Management/managementGroups/013b1119-5a71-40ea-8e77-d31c36d5ac5d` |
 
@@ -229,7 +231,7 @@ Once the JSON is complete (with real App IDs substituted), Base64-encode it usin
 echo -n '<paste the JSON here on one line>' | base64 | tr -d '\n'
 ```
 
-Provide the resulting Base64 string to **Admin A**, who will paste it into the CyberArk ISP onboarding field.
+Provide the resulting Base64 string to **Admin A**, who will paste it into the CyberArk ISP connecting field.
 
 ---
 
